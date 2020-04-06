@@ -7,6 +7,8 @@ install-deps/luajit*
 install-deps/LuaJIT*
 install-deps/hiredis*
 install-deps/redis*
+install-deps/boost*
+install-deps/wt-4*
 install-deps/build-opts.sh
 */*.pyc
 Unit/*.bp

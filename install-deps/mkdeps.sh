@@ -13,6 +13,8 @@ MPICXX=mpicxx
 # should be installed.
 BUILD_LUAJIT=
 BUILD_REDIS=
+BUILD_BOOST=
+BUILD_WT4=
 
 # ----------------------------------------------------------------------------
 # FUNCTION DEFINITIONS
@@ -45,6 +47,8 @@ and C++ compilers to use.
 
 --build-luajit              Should we build LuaJIT?
 --build-redis               Should we build redis?
+--build-boost               Should we build boost?
+--build-wt4                 Should we build wt4?
 
 The behavior of the flags for library xxx is as follows:
 --build-xxx=no              Don't build xxx, even if it can't be found in PREFIXDIR
@@ -124,7 +128,15 @@ do
    --build-redis)
       [ -n "$value" ] || die "Missing value in flag $key."
       BUILD_REDIS="$value"
-      ;;   
+      ;;
+   --build-boost)
+      [ -n "$value" ] || die "Missing value in flag $key."
+      BUILD_BOOST="$value"
+      ;;
+   --build-wt4)
+      [ -n "$value" ] || die "Missing value in flag $key."
+      BUILD_WT4="$value"
+      ;;
    *)
       die "Error: Unknown flag: $1"
       ;;
@@ -168,7 +180,7 @@ build_luajit() {
 }
 
 build_redis() {
-    if [[ ! "$BUILD_REDIS" = "no"  ]]
+    if [[ ! "$BUILD_REDIS" = "no" && ("$BUILD_REDIS" = "yes" || ! -f $PREFIX/redis-plus-plus/include/sw/redis++/redis.hpp) ]]
     then    
 	echo "Building redis and related libraries"
 	./build-redis.sh
@@ -177,7 +189,25 @@ build_redis() {
     fi
 }
 
+build_boost() {
+    if [[ ! "$BUILD_BOOST" = "no" && ("$BUILD_BOOST" = "yes" || ! -f $PREFIX/boost/include/boost/any.hpp) ]]
+    then    
+	echo "Building boost"
+	./build-boost.sh
+    fi
+}
+
+build_wt4() {
+    if [[ ! "$BUILD_WT4" = "no" && ("$BUILD_WT4" = "yes" || ! -f $PREFIX/wt/include/Wt/WApplication.h) ]]
+    then    
+	echo "Building wt4"
+	./build-wt4.sh
+    fi
+}
+
 echo "Installations will be in $PREFIX"
 
 build_luajit
 build_redis
+build_boost
+build_wt4
