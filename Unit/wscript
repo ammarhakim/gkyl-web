@@ -1,0 +1,30 @@
+## -*- python -*-
+# Build code in this directory
+##    _______     ___
+## + 6 @ |||| # P ||| +
+
+import os
+
+def appendToList(target, val):
+    if type(val) == list:
+        target.extend(val)
+    else:
+        target.append(val)
+
+def build(bld):
+    # set RPATH
+    fullRpath = []
+    appendToList(fullRpath, bld.env.RPATH) # user specified RPATH
+    appendToList(fullRpath, bld.env.LIBDIR)
+    appendToList(fullRpath, bld.env.LIBPATH_WT)
+    print(bld.env.LIBPATH_WT)
+
+    print(fullRpath)
+
+    bld.program(
+        source = 'ex_hello.cxx',
+        target = 'ex_hello',
+        includes = '../Lib .',
+	rpath = fullRpath,
+	use = 'WT BOOST'
+    )    

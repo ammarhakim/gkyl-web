@@ -1,5 +1,6 @@
 // Hello-world example with WT4
 
+#include <Wt/WApplication.h>
 #include <Wt/WBreak.h>
 #include <Wt/WContainerWidget.h>
 #include <Wt/WLineEdit.h>
@@ -16,7 +17,7 @@ class HelloApp : public Wt::WApplication {
 };
 
 HelloApp::HelloApp(const Wt::WEnvironment& env)
-  : Wt::WEnvironment(env) {
+  : Wt::WApplication(env) {
 
   setTitle("Hello, World!");
 }
@@ -24,7 +25,7 @@ HelloApp::HelloApp(const Wt::WEnvironment& env)
 int
 main(int argc, char **argv) {
   return Wt::WRun(argc, argv, [](const Wt::WEnvironment& env) {
-      return std::make_unique<Hello>(env);
+      return std::make_unique<HelloApp>(env);
     }
   );
 }

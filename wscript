@@ -24,7 +24,7 @@ from waflib import TaskGen
 
 def options(opt):
     opt.load('compiler_c compiler_cxx') 
-    opt.load('gkyl luajit',
+    opt.load('gkyl luajit boost wt',
              tooldir='waf_tools')
 
 def configure(conf):
@@ -34,6 +34,8 @@ def configure(conf):
     conf.load('compiler_c compiler_cxx')
     conf.check_gkyl()
     conf.check_luajit()
+    conf.check_boost()
+    conf.check_wt()
 
     # standard install location for dependencies
     gkydepsDir = os.path.expandvars('$HOME/gkylsoft')
