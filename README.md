@@ -2,7 +2,7 @@
 
 This is the code repo for the Gkeyll web interface. Caveat emptor:
 this is at present an experimental prototype and may eventually be
-adpoted in the larger Gkeyll project or be a dead-end. The code is
+adopted in the larger Gkeyll project or be a dead-end. The code is
 copyrighted 2020 by Ammar Hakim.
 
 # License
