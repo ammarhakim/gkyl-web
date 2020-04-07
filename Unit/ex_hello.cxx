@@ -10,7 +10,6 @@
 class HelloApp : public Wt::WApplication {
   public:
     HelloApp(const Wt::WEnvironment& env);
-
   private:
     Wt::WLineEdit *nameEdit;
     Wt::WText *greeting;
@@ -18,8 +17,20 @@ class HelloApp : public Wt::WApplication {
 
 HelloApp::HelloApp(const Wt::WEnvironment& env)
   : Wt::WApplication(env) {
-
+  
   setTitle("Hello, World!");
+  
+  root()->addWidget(std::make_unique<Wt::WText>("Name: "));
+  nameEdit = root()->addWidget(std::make_unique<Wt::WLineEdit>());
+  Wt::WPushButton *btn = root()->addWidget(std::make_unique<Wt::WPushButton>("Say Hello"));
+  
+  greeting = root()->addWidget(std::make_unique<Wt::WText>());
+  
+  auto greet = [this] {
+    greeting->setText("Hello " + nameEdit->text());
+  };
+  
+  btn->clicked().connect(greet);
 }
 
 int
