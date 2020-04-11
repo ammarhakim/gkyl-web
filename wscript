@@ -67,7 +67,7 @@ def build(bld):
     bld.recurse("Unit")
 
     # build executable
-    # buildExec(bld)
+    buildExec(bld)
 
     ### install LuaJIT code
 
@@ -90,3 +90,19 @@ def buildExec(bld):
         bld.env.LINKFLAGS_cxxstlib = ['-Wl,-Bstatic,-E']
         bld.env.STLIB_MARKER = '-Wl,-Bstatic,-E'
         bld.env.SHLIB_MARKER = '-Wl,-Bdynamic,--no-as-needed'
+
+    # set RPATH
+    fullRpath = []
+    appendToList(fullRpath, bld.env.RPATH) # user specified RPATH
+    appendToList(fullRpath, bld.env.LIBDIR)
+    appendToList(fullRpath, bld.env.LIBPATH_WT)
+
+    bld.program(
+        source = 'gkyl-web.cxx',
+        target = 'gkyl-web.wt',
+        includes = 'Lib .',
+        linkflags = EXTRA_LINK_FLAGS,
+	rpath = fullRpath,
+	use = 'WT BOOST',
+        lib = 'pthread ' + bld.env.EXTRALIBS,
+    )
