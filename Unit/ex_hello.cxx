@@ -1,4 +1,6 @@
 // Hello-world example with WT4
+//
+// ./ex_hello --docroot . --http-address 0.0.0.0 --http-port 9090
 
 #include <Wt/WApplication.h>
 #include <Wt/WBreak.h>
